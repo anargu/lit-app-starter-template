@@ -1,4 +1,7 @@
-#Lit-App Starter Template
+> ## 🛠 Status: In Development
+> LitElement is currently in development. As long as LitElement is, so is create-lit-app. This repo will be kept up to date with the latest version of LitElement, but there are things that haven't been finalized yet and you can expect some changes.
+
+# Lit-App Starter Template
 
 This is a simple starter template of a Lit-html App. It supports stylus so you can forget to put several `{ }` and `;` and just write the style fields - values.
 
@@ -14,7 +17,7 @@ This template contains the following:
 - Usage of feather-icons: Open source icons. More details [here](https://github.com/feathericons/feather).
 
 
-###Usage
+### Usage
 
 - install dependencies
 
@@ -35,13 +38,13 @@ This template contains the following:
         # yarn
         yarn build
 
-###Usage (to create a project from this template)
+### Usage (to create a project from this template)
 
 Just clone the repo, e.g:
 
     git clone http://xx.git <project_directory_name>
 
-###TODO
+### TODO
 
 - add PWA features
 - add Testing tools (possibly Jest)
