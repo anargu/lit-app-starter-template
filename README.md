@@ -1,5 +1,3 @@
-> ## 🛠 Status: In Development
-> LitElement is currently in development. As long as LitElement is, so is create-lit-app. This repo will be kept up to date with the latest version of LitElement, but there are things that haven't been finalized yet and you can expect some changes.
 
 # Lit-App Starter Template
 
