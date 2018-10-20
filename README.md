@@ -35,6 +35,12 @@ This template contains the following:
         # yarn
         yarn build
 
+###Usage (to create a project from this template)
+
+Just clone the repo, e.g:
+
+    git clone http://xx.git <project_directory_name>
+
 ###TODO
 
 - add PWA features
