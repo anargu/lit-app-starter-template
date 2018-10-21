@@ -1,9 +1,7 @@
 // Karma configuration
 // Generated on Sat Oct 20 2018 17:18:05 GMT-0500 (Peru Standard Time)
 const path = require('path')
-const ENV = process.argv.find(arg => arg.includes('production'))
-  ? 'production'
-  : 'development'
+const utils = require('./webpack.utils')
 
 module.exports = function(config) {
   config.set({
@@ -89,41 +87,7 @@ module.exports = function(config) {
       mode: 'development',
       module: {
         rules: [
-          {
-            test: /\.css$/,
-            use: ['css-to-string-loader', 'css-loader', 
-              { loader: 'postcss-loader', options: {
-                  ident: 'postcss',
-                  plugins: () => [
-                    postcssPresetEnv()
-                  ]
-                } 
-              }
-            ]
-          },
-          {
-              test: /\.styl$/,
-              use: [
-                  'css-to-string-loader',
-                  'css-loader',
-                  'stylus-loader'
-              ]
-          },
-          {
-              test: /\.js$/,
-              // exclude: /(node_modules|bower_components)/,
-              use: [
-                {
-                  loader: 'babel-loader',
-                  options: {
-                    babelrc: true,
-                    extends: path.join(__dirname + '/.babelrc'),
-                    cacheDirectory: true,
-                    envName: ENV
-                  }
-                }
-              ]
-          },
+          ...utils.rules,
           // {
           //   test: /\.js$/,
           //   loader: 'babel-loader',

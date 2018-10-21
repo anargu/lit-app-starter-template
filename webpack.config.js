@@ -1,34 +1,32 @@
 const path = require('path')
-const resolve = require('path').resolve
-const join = require('path').join
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const merge = require('webpack-merge')
-const postcssPresetEnv = require('postcss-preset-env')
 
-const ENV = process.argv.find(arg => arg.includes('production'))
-  ? 'production'
-  : 'development';
+const utils = require('./webpack.utils')
+
+const ENV = utils.ENV
 const INDEX_TEMPLATE = path.resolve(__dirname, 'src/index.html')
-const OUTPUT_PATH = ENV === 'production' ? resolve('dist') : resolve('src'); // resolve('dist')
+const OUTPUT_PATH = ENV === 'production' ? path.resolve('dist') : path.resolve('src') // resolve('dist')
+
+const webcomponentsjs = './node_modules/@webcomponents/webcomponentsjs'
 
 
-const webcomponentsjs = './node_modules/@webcomponents/webcomponentsjs';
-// const webanimationjs = './node_modules/web-animations-js';
 const polyfills = [
     {
-        from: resolve(`${webcomponentsjs}/webcomponents-*.js`),
-        to: join(OUTPUT_PATH, 'vendor'),
+        from: path.resolve(`${webcomponentsjs}/webcomponents-*.js`),
+        to: path.join(OUTPUT_PATH, 'vendor'),
         flatten: true
     },
     {
-        from: resolve(`${webcomponentsjs}/bundles/*.js`),
-        to: join(OUTPUT_PATH, 'vendor', 'bundles'),
+        from: path.resolve(`${webcomponentsjs}/bundles/*.js`),
+        to: path.join(OUTPUT_PATH, 'vendor', 'bundles'),
         flatten: true
     },
     {
-        from: resolve(`${webcomponentsjs}/custom-elements-es5-adapter.js`),
-        to: join(OUTPUT_PATH, 'vendor'),
+        from: path.resolve(`${webcomponentsjs}/custom-elements-es5-adapter.js`),
+        to: path.join(OUTPUT_PATH, 'vendor'),
         flatten: true
     },
     // {
@@ -48,8 +46,8 @@ const polyfills = [
 
 const assets = [
     {
-        from: resolve('./src/assets/*.*'),
-        to: resolve('dist/assets/'),
+        from: path.resolve('./src/assets/*.*'),
+        to: path.resolve('dist/assets/'),
         flatten: true
     }
 ]
@@ -58,16 +56,16 @@ const productionConfig = merge([
     {
         devtool: 'nosources-source-map',
         plugins: [
-            // new CleanWebpackPlugin([OUTPUT_PATH], { verbose: true }),
-            new CopyWebpackPlugin([...polyfills, ...assets]), // ...assets
+            new CleanWebpackPlugin([OUTPUT_PATH], { verbose: true }),
+            new CopyWebpackPlugin([...polyfills, ...assets]),
             new HtmlWebpackPlugin({
                 template: INDEX_TEMPLATE,
-                // minify: {
-                //     collapseWhitespace: true,
-                //     removeComments: true,
-                //     minifyCSS: true,
-                //     minifyJS: true
-                // }
+                minify: {
+                    collapseWhitespace: true,
+                    removeComments: true,
+                    minifyCSS: true,
+                    minifyJS: true
+                }
             })
         ]
     }
@@ -102,43 +100,7 @@ const commonConfig = merge([
             filename: 'bundled.js'
         },
         module: {
-            rules: [
-                {
-                  test: /\.css$/,
-                  use: ['css-to-string-loader', 'css-loader', 
-                    { loader: 'postcss-loader', options: {
-                        ident: 'postcss',
-                        plugins: () => [
-                          postcssPresetEnv()
-                        ]
-                      } 
-                    }
-                  ]
-                },
-                {
-                    test: /\.styl$/,
-                    use: [
-                        'css-to-string-loader',
-                        'css-loader',
-                        'stylus-loader'
-                    ]
-                },
-                {
-                    test: /\.js$/,
-                    // exclude: /(node_modules|bower_components)/,
-                    use: [
-                      {
-                        loader: 'babel-loader',
-                        options: {
-                          babelrc: true,
-                          extends: join(__dirname + '/.babelrc'),
-                          cacheDirectory: true,
-                          envName: ENV
-                        }
-                      }
-                    ]
-                }
-            ]
+            rules: [...utils.rules]
         }
     }
 ])
