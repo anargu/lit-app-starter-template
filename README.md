@@ -29,6 +29,12 @@ This template contains the following:
         # yarn
         yarn dev
 
+- test
+
+        npm run test
+        # yarn
+        yarn test
+
 - build to production
 
         #to build
@@ -45,4 +51,7 @@ Just clone the repo, e.g:
 ### TODO
 
 - add PWA features
-- add Testing tools (possibly Jest)
+
+### In Process
+
+- add Testing tools (with Karma & Jasmine)
