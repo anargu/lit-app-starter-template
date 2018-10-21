@@ -5,10 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Lit App</title>
-    
+    <meta name="description" content="Lit App starter template">
+    <!--
+      The `<base>` tag below is present to support two advanced deployment options:
+      1) Differential serving. 2) Serving from a non-root path.
+
+      Instead of manually editing the `<base>` tag yourself, you should generally either:
+      a) Add a `basePath` property to the build configuration in your `polymer.json`.
+      b) Use the `--base-path` command-line option for `polymer build`.
+    -->
+    <base href="/">
+ 
+    <link rel="shortcut icon" href="assets/manifest/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="assets/manifest/favicon.ico" type="image/x-icon">
+
+    <!-- See https://goo.gl/OOhYW5 -->
+    <link rel="manifest" href="assets/manifest/manifest.json">
+
+    <!-- See https://goo.gl/qRE0vM -->
+    <meta name="theme-color" content="#0f202d">
+
+
+    <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Lit App">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Lit App">
+
+    <!-- Homescreen icons -->
+    <link rel="apple-touch-icon" href="assets/manifest/android-icon-48x48.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/manifest/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="96x96" href="assets/manifest/favicon-96x96.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/manifest/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="assets/manifest/android-icon-192x192.png">
+
+    <!-- Tile icon for Windows 8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="assets/manifest/apple-icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#0f202d">
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <!-- Default twitter cards -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@username">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="my-app">
+    <meta property="og:image" content="assets/manifest/apple-icon-144x144.png" />
+
+
+    <!-- Performance tip: hint to the browser to start the handshake for the fonts site -->
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+
     <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
 </head>
 <body>
+    <% if (webpackConfig.mode === 'production') {  %>
+    <script>
+        // Load and register pre-caching Service Worker
+        // var mode = '<%= webpackConfig.mode %>'
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js').then(registration => {
+                    console.log('SW registered: ', registration)
+                }).catch(registrationError => {
+                    console.log('SW registration failed: ', registrationError)
+                })
+            })
+        }
+    </script>
+    <% } %>
+    
     <style>
         html { margin: 0 !important; }
         body { margin: 0 !important; }

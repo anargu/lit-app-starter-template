@@ -9,8 +9,10 @@ import { asyncAppend } from 'lit-html/directives/async-append'
 import { asyncReplace } from 'lit-html/directives/async-replace'
 
 import './components/toolbar/toolbar.js'
-import appCss from './app.styl'
+import appCss from './lit-app.styl'
 import './components/box-card/box-card.js'
+
+import { offlineWatcher } from './helpers/network'
 
 const wait = (t) => new Promise((resolve) => setTimeout(resolve, t))
 async function* countUp() {
@@ -31,13 +33,23 @@ class LitApp extends LitElement {
         this.whenCheckbox = false
         this.openPostDetail = false
         this.guardItems = ['blue', 'red', 'green']
+
+        this.setOfflineWatcher()
     }
 
     static get properties() {
         return {
             whenCheckbox: Boolean,
-            guardItems: Array
+            guardItems: Array,
+            offline: Boolean
         }
+    }
+
+    setOfflineWatcher() {
+        this.offline = false
+        offlineWatcher((isOffline) => {
+            this.offline = isOffline
+        })
     }
 
     render() {
@@ -46,6 +58,10 @@ class LitApp extends LitElement {
         ${appCss}
         </style>
         
+        ${when(this.offline, () => html`
+            <div class="offline-mode">Offline mode. Please check your connection</div>
+        `, () => {})}
+
         <m-toolbar title="Lit-App template"></m-toolbar>
 
         <div class="page-container">

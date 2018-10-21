@@ -30,7 +30,9 @@ class Toolbar extends LitElement {
 		${css}
 		</style>
 		<div class="toolbar-content">
-			<span @click=${() => this.icon = randomFeatherIcon(this.icon)}>${featherIcon(this.icon, 'arrowright')}</span>
+			<span
+				class="arrowright" 
+				@click=${() => this.icon = randomFeatherIcon(this.icon)}>${featherIcon(this.icon, '')}</span>
 			<a href="#">${this.title}</a>
 		</div>
 		`

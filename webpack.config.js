@@ -2,6 +2,7 @@ const path = require('path')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const WorkboxPlugin = require('workbox-webpack-plugin')
 const merge = require('webpack-merge')
 
 const utils = require('./webpack.utils')
@@ -49,6 +50,11 @@ const assets = [
         from: path.resolve('./src/assets/*.*'),
         to: path.resolve('dist/assets/'),
         flatten: true
+    },
+    {
+        from: path.resolve('./src/assets/manifest/*.*'),
+        to: path.resolve('dist/assets/manifest/'),
+        flatten: true
     }
 ]
   
@@ -66,6 +72,12 @@ const productionConfig = merge([
                     minifyCSS: true,
                     minifyJS: true
                 }
+            }),
+            new WorkboxPlugin.GenerateSW({
+                // these options encourage the ServiceWorkers to get in there fast 
+                // and not allow any straggling "old" SWs to hang around
+                clientsClaim: true,
+                skipWaiting: true
             })
         ]
     }
