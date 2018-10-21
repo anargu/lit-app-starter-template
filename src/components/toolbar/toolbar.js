@@ -2,7 +2,7 @@
 import { LitElement } from '@polymer/lit-element'
 import { html } from 'lit-html'
 import css from './toolbar.styl'
-import { featherIcon } from '../commons/icon.js'
+import { featherIcon, randomFeatherIcon } from '../commons/icons.js'
 
 class Toolbar extends LitElement {
 
@@ -10,23 +10,19 @@ class Toolbar extends LitElement {
 		super()
 
 		this.title = '<no name>'
-		// console.log('f', feather.icons.circle.toSvg())
-		// console.log('g', iconEl)
-	}
-
-	toolbarIcon() {
-		let span = document.createElement('span')
-		span.style = 'vertical-align: sub;'
-		const icon = feather.icons['layers'].toSvg({ class: 'arrowright' })
-		span.innerHTML = icon
-		return span
+		this.icon = randomFeatherIcon()
 	}
 
     static get properties () {
         return {
-			title: String
+			title: String,
+			icon: String
 		}
-    }
+	}
+	
+	doSomething() {
+		return 'something'
+	}
 
     render() {
         return html`
@@ -34,7 +30,7 @@ class Toolbar extends LitElement {
 		${css}
 		</style>
 		<div class="toolbar-content">
-			<span>${featherIcon('layers', 'arrowright')}</span>
+			<span @click=${() => this.icon = randomFeatherIcon()}>${featherIcon(this.icon, 'arrowright')}</span>
 			<a href="#">${this.title}</a>
 		</div>
 		`
