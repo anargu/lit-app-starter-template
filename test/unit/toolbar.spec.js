@@ -1,6 +1,5 @@
+// import '../../src/components/toolbar/toolbar.js'
 import '../../src/components/toolbar/toolbar.js'
-
-// import { html } from 'lit-html'
 
 describe('test methods of lit elements', () => {
 
