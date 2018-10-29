@@ -1,4 +1,5 @@
-import { randomFeatherIcon/*, featherIcon */ } from '../../src/components/commons/icons.js'
+/*
+import { randomFeatherIcon } from '../../src/components/commons/icons.js'
 
 describe('return a different icon each time it\'s clicked', () => {
     for (let i = 0; i < 1000; i++) {
@@ -7,3 +8,4 @@ describe('return a different icon each time it\'s clicked', () => {
         })    
     }
 })
+*/

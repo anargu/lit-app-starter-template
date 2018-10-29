@@ -2,7 +2,22 @@
 import { LitElement } from '@polymer/lit-element'
 import { html } from 'lit-html'
 import css from './toolbar.styl'
-import { featherIcon, randomFeatherIcon } from '../commons/icons.js'
+import eyeSVG from '../../assets/eye.svg'
+import heartSVG from '../../assets/heart.svg'
+import searchSVG from '../../assets/heart.svg'
+import svg from '../../utils/inlinesvg'
+
+const iconsMap = {
+	'eye': eyeSVG,
+	'heart': heartSVG,
+	'search': searchSVG
+}
+const indexIconsMap = {
+	0: 'eye',
+	1: 'heart',
+	2: 'search'
+}
+const iconsSize = Object.keys(iconsMap).length
 
 class Toolbar extends LitElement {
 
@@ -10,7 +25,7 @@ class Toolbar extends LitElement {
 		super()
 
 		this.title = '<no name>'
-		this.icon = randomFeatherIcon()
+		this.icon = this.randomIcon()
 	}
 
     static get properties () {
@@ -24,6 +39,15 @@ class Toolbar extends LitElement {
 		return 'something'
 	}
 
+	randomIcon(activeIcon = '') {
+		let index = Math.floor(Math.random() * iconsSize)
+		
+		if (activeIcon === indexIconsMap[index]) {
+			return this.randomIcon(activeIcon)
+		}
+		return indexIconsMap[index]
+	}
+
     render() {
         return html`
 		<style>
@@ -31,8 +55,10 @@ class Toolbar extends LitElement {
 		</style>
 		<div class="toolbar-content">
 			<span
-				class="arrowright" 
-				@click=${() => this.icon = randomFeatherIcon(this.icon)}>${featherIcon(this.icon, '')}</span>
+				@click=${() => this.icon = this.randomIcon(this.icon)}
+				class="arrowright">
+				${svg(iconsMap[this.icon])}
+			</span>
 			<a href="#">${this.title}</a>
 		</div>
 		`
