@@ -30,7 +30,10 @@ module.exports = {
         },
         {
             test: /\.js$/,
-            // exclude: /(node_modules|bower_components)/,
+            include: [
+                path.resolve(__dirname, "src"),
+                path.resolve(__dirname, "node_modules/\@polymer")
+            ],
             use: [
                 {
                 loader: 'babel-loader',
