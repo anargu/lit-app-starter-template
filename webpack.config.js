@@ -3,6 +3,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const WorkboxPlugin = require('workbox-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const merge = require('webpack-merge')
 
 const utils = require('./webpack.utils')
@@ -47,14 +48,8 @@ const polyfills = [
 
 const assets = [
     {
-        from: path.resolve('./src/assets/*.*'),
-        to: path.resolve('dist/assets/'),
-        flatten: true
-    },
-    {
-        from: path.resolve('./src/assets/manifest/*.*'),
-        to: path.resolve('dist/assets/manifest/'),
-        flatten: true
+        from: path.resolve('./src/assets/'),
+        to: path.resolve('dist/assets/')
     }
 ]
   
@@ -79,7 +74,13 @@ const productionConfig = merge([
                 clientsClaim: true,
                 skipWaiting: true
             })
-        ]
+        ],
+        optimization: {
+            minimize: true,
+            splitChunks: {
+                chunks: 'all',
+            }
+        }
     }
 ])
 
@@ -90,7 +91,8 @@ const developmentConfig = merge([
             new CopyWebpackPlugin([...polyfills]), // ...assets
             new HtmlWebpackPlugin({
                 template: INDEX_TEMPLATE
-            })
+            }),
+            new BundleAnalyzerPlugin()
         ],
 
         devServer: {
@@ -109,7 +111,7 @@ const commonConfig = merge([
         entry: path.resolve(__dirname, 'src/lit-app.js'),
         output: {
             path: path.resolve(__dirname, OUTPUT_PATH),
-            filename: 'bundled.js'
+            filename: '[name].bundle.[contenthash].js'
         },
         module: {
             rules: [...utils.rules]
