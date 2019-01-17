@@ -35,13 +35,9 @@ const polyfills = [
     //     from: resolve(`${webanimationjs}/web-animations-next.min.js`),
     //     to: join(OUTPUT_PATH, 'vendor'),
     //     flatten: true
-    // }
-    // {
-    //     from: resolve('./node_modules/whatwg-fetch/fetch.js'),
-    //     to: join(OUTPUT_PATH, 'vendor')
     // },
     // {
-    //     from: resolve('./node_modules/promise-polyfill/dist/polyfill.min.js'),
+    //     from: resolve('./node_modules/whatwg-fetch/fetch.js'),
     //     to: join(OUTPUT_PATH, 'vendor')
     // }
 ]
@@ -103,7 +99,7 @@ const developmentConfig = merge([
             historyApiFallback: true,
             host: 'localhost'
         }
-        }
+    }
 ])
 
 const commonConfig = merge([
